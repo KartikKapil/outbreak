@@ -1,122 +1,71 @@
 <!DOCTYPE html>
+{% load static%}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="list_hospital/css/style.css">
-    <style type="text/css">
-        @import url('https://fonts.googleapis.com/css?family=Alata&display=swap');
-        body {
-    margin: 0;
-    padding: 0;
-    font-size: 20px;
-    font-family: Alata;
-}
-
-a {
-    color: #000000;
-    text-decoration: none;
-}
-
-header {
-    padding: 1% 0;
-    padding-left: 10px;
-    background: rgb(86, 175, 216);
-}
-
-header img {
-    float: left;
-}
-
-header nav {
-    display: flex;
-}
-
-header nav a {
-    margin: 0 15px;
-    background: rgb(9, 71, 100);
-    padding: 10px;
-    border-radius: 5px;
-}
-
-main {
-    width: 50%;
-    position: absolute;
-    left: 50%;
-    top: 30%;
-    transform: translateX(-50%);
-    text-align: center;
-}
-
-#search-form .autocomplete input {
-    margin-top: 1%;
-    width: 50%;
-    padding: 1%;
-    font-size: 15px;
-    border-radius: 10px;
-    outline: none;
-}
-
- #search-form .autocomplete-items {
-    position: absolute;
-    width: 50%;
-    border: 1px solid #d4d4d4;
-    border-bottom: none;
-    border-top: none;
-    z-index: 99;
-    /*position the autocomplete items to be the same width as the container:*/
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);   
-    right: 0;
-}
-
-/* #search-form .autocomplete {
-    display: inline-block;
-} */
-
-#search-form .autocomplete-items div {
-    width: 100%;
-    padding: 5px;
-    cursor: pointer;
-    background-color: #fff;
-    border-bottom: 1px solid #d4d4d4;
-}
-
-#search-form .autocomplete-items div:hover {
-    background-color: #e9e9e9;
-}
-
-#search-form .autocomplete-active {
-    background-color: DodgerBlue !important;
-    color: #ffffff;
-}
-table {
-    position: absolute;
-    left: 50%;
-    top: 20%;
-    transform: translateX(-50%);
-    border: 1px solid rgb(86, 175, 216);
-}
-
-table td, th {
-    padding: 10px;
-}
-    </style>
-    <title>Document</title>
-</head>
-{%load static%}
-<body>
-    <header>
-        <img src="{% static 'logo.png'%}" alt="OutBreak" width="12%">
-        <nav>
-            <a href="#">Find Hospital</a>
-            <a href="#">Add Hospital</a>
-        </nav>
-    </header>
-    {% block body%}
-
-    {% endblock %}
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link rel="stylesheet" href="{% static 'style.css' %}" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="top" id="tops">
+            <a href="#default" id="logo"
+                ><span id="smiley">&#9788;</span>UTBREAK</a
+            >
+            <div class="right">
+                <span class="span" onclick="openAbout()" id="about">ABOUT</span>
+                <span class="span" onclick="openPage()" id="contact"
+                    >CONTACT</span
+                >
+                <a href="">SIGN-UP</a>
+                <a href="" id="home">HOME</a>
+            </div>
+        </div>
+        <div id="page" class="opPage">
+            <a href="javascript:void(0)" class="close" onclick="closePage()"
+                >&#10005;</a
+            >
+            <div class="content">
+                <p id="message">LEAVE A MESSAGE</p>
+                <br />
+                <div class="detail">
+                    <input
+                        type="text"
+                        placeholder=" First Name"
+                        style="border-radius: 5px; height:30px; width:200px"
+                    /><br /><br />
+                    <input
+                        type="text"
+                        placeholder=" Last Name"
+                        style="border-radius: 5px; height:30px; width:200px"
+                    /><br /><br />
+                    <input
+                        type="email"
+                        placeholder=" What's your e-mail"
+                        style="border-radius: 5px; height:30px; width:200px"
+                    /><br /><br />
+                    <textarea
+                        placeholder="Message..."
+                        style="height:100px; width:200px; border-radius:5px"
+                    ></textarea
+                    ><br /><br />
+                    <button id="send">SEND</button><br /><br />
+                </div>
+            </div>
+        </div>
+        <div>
+            <div id="pageAbout" class="opAbout">
+                <a
+                    href="javascript:void(0)"
+                    class="close"
+                    onclick="closeAbout()"
+                    >&#10005;</a
+                >
+            </div>
+        </div>
+<!--        <img src="{% static 'logo.png' %}" >-->
+        {% block content %} {% endblock %}
+        <script src="{% static 'index.js' %}"></script>
+    </body>
 </html>
