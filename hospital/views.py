@@ -2,4 +2,7 @@ from django.shortcuts import render, redirect
 
 
 def home(request):
-    return redirect('login')
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+    else:
+        return redirect('login')

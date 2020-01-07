@@ -10,7 +10,7 @@
     </head>
     <body>
         <div class="top" id="tops">
-            <a href="#default" id="logo"
+            <a href="{% url 'home' %}" id="logo"
                 ><span id="smiley">&#9788;</span>UTBREAK</a
             >
             <div class="right">
@@ -18,8 +18,8 @@
                 <span class="span" onclick="openPage()" id="contact"
                     >CONTACT</span
                 >
-                <a href="">SIGN-UP</a>
-                <a href="" id="home">HOME</a>
+                <a href="{% url 'signup_p' %}">SIGN-UP</a>
+                <a href="{% url 'home' %}" id="home">HOME</a>
             </div>
         </div>
         <div id="page" class="opPage">

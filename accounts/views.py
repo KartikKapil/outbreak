@@ -36,7 +36,5 @@ def signup_h(request):
 
 @login_required
 def dashboard(request):
-    print(request.user)
     user_info = Patient.objects.get(user = request.user)
-    print(user_info.name)
     return render(request, 'accounts/dashboard.html', {'User': user_info})
