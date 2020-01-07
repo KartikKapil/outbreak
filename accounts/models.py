@@ -68,8 +68,8 @@ class Patient(models.Model):
 	Gender = 			[('Male','M'), ('Female','F'), ('Others','O'),]	#selection of gender
 	gender = 			models.CharField(max_length=6, choices=Gender, default='Male')
 	contact_no = 		models.IntegerField(unique=True, blank=False)
-	Social_Status = 	[('SC','SC'), ('Gen','Gen'), ('ST','ST'), ('OBC','OBC'),]
-	social_status = 	models.CharField(max_length=5, choices=Social_Status, default='Gen')
+	Social_Status = 	[('SC','SC'), ('General','Gen'), ('ST','ST'), ('OBC','OBC'),]
+	social_status = 	models.CharField(max_length=8, choices=Social_Status, default='Gen')
 	prefd_hospital = 	models.CharField(max_length=100)
 
 	def __str__(self):

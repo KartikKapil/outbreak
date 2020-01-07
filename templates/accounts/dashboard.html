@@ -1,0 +1,11 @@
+{% extends 'base.html' %} {% block content %}
+<a href="{% url 'dashboard' %}">Profile</a>
+<a href="#">Find Healthcare Facilities</a>
+<a href="#">Healthcare Schemes</a>
+<p>Name: {{User.name}}</p>
+<p>Age: {{User.age}}</p>
+<p>Gender: {{User.gender}}</p>
+<p>Contact No.: {{User.contact_no}}</p>
+<p>Social Status: {{User.social_status}}</p>
+<p>Prefferred Hospital: {{User.prefd_hospital}}</p>
+{% endblock %}
