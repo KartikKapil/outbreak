@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-
+from .APIs import chronic
 
 @login_required
 def search(request):
@@ -13,9 +13,9 @@ def search(request):
 @login_required
 def list_hospitals(request, data):
     if not data:
-        # Generate all kinds of Facilities
-        hospitals = []
+        # Generate all nearby facilities
+        hospitals = chronic(28.6358749, 77.3738937)
     else:
         # Generate Customised facilities
-        hospitals = []
-    return render(request, 'list_hospitals/index.html', {})
+        hospitals = chronic(28.6358749, 77.3738937)
+    return render(request, 'list_hospitals/index.html', {'hospitals': hospitals })

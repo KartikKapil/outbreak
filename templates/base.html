@@ -17,8 +17,11 @@
                 <span class="span" onclick="openAbout()" id="about">ABOUT</span>
                 <span class="span" onclick="openPage()" id="contact"
                     >CONTACT</span
-                >
+                >{% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">LOGOUT</a>
+                {% else %}
                 <a href="{% url 'signup_p' %}">SIGN-UP</a>
+                {% endif %}
                 <a href="{% url 'home' %}" id="home">HOME</a>
             </div>
         </div>

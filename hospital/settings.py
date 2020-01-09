@@ -101,6 +101,7 @@ USE_TZ = True
 
 
 LOGIN_REDIRECT_URL = '/accounts/dashboard'
+LOGOUT_REDIRECT_URL = ''
 
 # Static Files
 STATIC_PATH=os.path.join(BASE_DIR, '')

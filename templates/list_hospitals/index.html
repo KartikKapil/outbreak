@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
-{% block body%}
-
+{% block content %}
 <table border="1">
-        <tr><th>Hospital Name</th><th>Beds Free</th><th>Address</th><th>Distance</th></tr>
-
+        <tr>
+			<th>Hospital Name</th>
+			<th>Address</th>
+			<th>Distance</th>
+		</tr>
 	{% for hsp in hospitals %}
 	<tr>
-		<td><a href="/list_hospital/list_for_hospital/{{hsp.id}}/">{{hsp.name}}</a></td>
-		<td>{{hsp.currently_free}}</td>
-		<td>{{hsp.address}}</td>
-		<td>70</td>
+		<td>{{hsp.name}}</td>
+		<td>{{hsp.address}}sf</td>
+		<td>{{hsp.distance}}Km</td>
 	</tr>
 	{% endfor %}
 </ul>
