@@ -1,0 +1,38 @@
+SMART INDIA HACKATHON 2020
+
+Problem Statement - 
+	People come to cities because of better health facilities. What should be done to improve the health facilities in the city and also provide equitable access for all?
+
+Problem Description - 
+	There exists good medicle facilities across city in India. But due to higher migration rate and other factors, some people are not aware of these facilities. Moreover, eligible people are unaware of government schemes for availing medicle facilities. We are seeking software solution for (1) checking availability of nearby medical facilities, based on search criteria (2) facility for checking related medicle government schemes, as applicable. Additional features are welcome.
+
+Organisation - Ministry of Housing and Urban Affairs
+
+Category - Software
+
+Domain Bucket - Healthcare & Biomedical Devices
+
+Current Progress -
+	User is able to locate the nearby health-care facilities based on his/her disease
+
+Technologies Used -
+	-> Backend -
+		=> Django
+	-> Frontend -
+		=> HTML
+		=> CSS
+		=> JavaScript
+		=> Vue.js
+	-> Database -
+		=> SQLlite3 (Only for the prototype phase, to be shifted to a more secure MySQL Database for production)
+
+Resources used -
+	-> Websites -
+		=> https://www.nhp.gov.in/
+		=> https://data.gov.in/
+		=> https://www.nlm.nih.gov/
+		=> https://www.nhsinform.scot/
+	-> API's Used -
+		=> Google Maps API
+		=> TomTom Synchronous Matrix API
+		=> ApiMedic
