@@ -59,7 +59,7 @@ def chronic(lati,longi):
 				'distance': res['matrix'][0][i]['response']['routeSummary']['lengthInMeters']/1000
 			})
 		print(result)
-		time.sleep(3)
+		# time.sleep(3)
 		print("yeahhhhh")
 	return result
 

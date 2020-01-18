@@ -8,5 +8,6 @@ urlpatterns = [
     path('logout/', djViews.LogoutView.as_view(), name='logout'),
     path('signup/patient/', views.signup_p, name='signup_p'),
     path('signup/hospital/', views.signup_h, name='signup_h'),
-    path('dashboard/', views.dashboard, name='dashboard')
+    path('pat/dashboard/', views.patient_dashboard, name='patient_dashboard'),
+    path('hos/dashboard/', views.hospital_dashboard, name='hospital_dashboard'),
 ]

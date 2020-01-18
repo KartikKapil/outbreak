@@ -71,6 +71,7 @@ class Patient(models.Model):
 	Social_Status = 	[('SC','SC'), ('General','Gen'), ('ST','ST'), ('OBC','OBC'),]
 	social_status = 	models.CharField(max_length=8, choices=Social_Status, default='Gen')
 	prefd_hospital = 	models.CharField(max_length=100)
+	tokenNo = 			models.IntegerField(blank=True, null=True)
 
 	def __str__(self):
 		return self.name
@@ -78,11 +79,18 @@ class Patient(models.Model):
 
 
 class Hospital(models.Model):
-	user = 				models.OneToOneField(User, on_delete = models.CASCADE)
-	name = 				models.CharField(max_length=250)
-	address = 			models.CharField(max_length=250)
-	bed_capacity = 		models.CharField(max_length=250)
-	currently_free = 	models.CharField(max_length=250)
+	user = 					models.OneToOneField(User, on_delete = models.CASCADE)
+	name = 					models.CharField(max_length=250)
+	address = 				models.CharField(max_length=250)
+	bed_capacity = 			models.CharField(max_length=250)
+	currently_free = 		models.CharField(max_length=250)
+	hasTokenSystem = 		models.BooleanField(default=False)
+	linkToTokenWebsite = 	models.URLField(blank=True, null=True)
 
 	def __str__(self):
-		return self.name+', '+self.address+', '+self.currently_free+', '+self.longi+', '+self.lati
+		return self.name
+
+class Token(models.Model):
+	user = 				models.OneToOneField(User, on_delete = models.CASCADE)
+	department = 		models.CharField(max_length=3)
+	count = 			models.IntegerField(default=0)
