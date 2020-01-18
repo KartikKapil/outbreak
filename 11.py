@@ -72,7 +72,7 @@ def new(symptom,age,d_o_b,gender):
 	symptoms=[101,175,50]
 	with open("allsympotoms.json") as json_file:
 		data=json.load(json_file)
-
+.
 	for i in range(len(data)):
 		if(data[i]["Name"]==str(symptom)):
 			symptoms.append(data[i]["ID"])

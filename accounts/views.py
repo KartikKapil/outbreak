@@ -38,6 +38,7 @@ def signup_h(request):
             user = userForm.save(commit=False)
             user.user_type = 'H'
             user.save()
+            specialities=hospitalForm.cleaned_data.get('specialities')
 
             # Save Patient
             patient = hospitalForm.save(commit=False)
