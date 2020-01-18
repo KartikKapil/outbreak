@@ -87,7 +87,7 @@ class Hospital(models.Model):
 	currently_free = 		models.CharField(max_length=250)
 	hasTokenSystem = 		models.BooleanField(default=False)
 	linkToTokenWebsite = 	models.URLField(blank=True, null=True)
-	differnt_options=(("Allergy & Clinical Immunology", "Allergy & Clinical Immunology"), ("Anaesthesia", "Anaesthesia"),("Bariatric & Metabolic Surgery","Bariatric & Metabolic Surgery"),
+	department_options =	(("Allergy & Clinical Immunology", "Allergy & Clinical Immunology"), ("Anaesthesia", "Anaesthesia"),("Bariatric & Metabolic Surgery","Bariatric & Metabolic Surgery"),
 	 ('Blood Disorders','Blood Disorders'),("Breast Surgery", "Breast Surgery"), ("Cardiac Anaesthesia", "Cardiac Anaesthesia"),("Cardiac Surgery", "Cardiac Surgery"),
 	 ("Cardiology","Cardiology"), ("Cardiology - Interventional","Cardiology - Interventional"),("Dental Sciences","Dental Sciences"), ("Dermatology","Dermatology"),
 	 ("Diabetes And Endocrinology","Diabetes And Endocrinology"),("Dietetics & Clinical Nutrition","Dietetics & Clinical Nutrition"),("ENT","ENT"),("Geriatric Medicine","Geriatric Medicine"),
@@ -102,7 +102,7 @@ class Hospital(models.Model):
 	 ("Paediatrics","Paediatrics"),("Pain management","Pain management"),("Physiotherapy and Rehabilitation","Physiotherapy and Rehabilitation"),("Plastic, Cosmetic & Reconstructive Surgery","Plastic, Cosmetic & Reconstructive Surgery"), ("DiabeticFoot Care","Diabetic Foot Care"), ("Pulmonology", "Pulmonology"), ("Radiation Oncology","Radiation Oncology"), ("Radiology","Radiology"), ("Rheumatology","Rheumatology"), ("Arthroscopic Surgery","Arthroscopic Surgery"),
 	 ("Surgical Oncology","Surgical Oncology"),("Trauma & Emergency Medicine","Trauma & Emergency Medicine"),("Urology & Andrology","Urology & Andrology"),("Urology, Andrology & Transplant Surgery","Urology, Andrology & Transplant Surgery"),
 	 ("Vascular Surgery", "Vascular Surgery"),)
-	specialities=MultiSelectField(choices=differnt_options,default=None)
+	specialities =			MultiSelectField(choices=department_options, default=None)
 
 
 	def __str__(self):

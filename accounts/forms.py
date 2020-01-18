@@ -22,4 +22,4 @@ class HospitalForm (forms.ModelForm):
 
     class Meta:
         model = Hospital
-        fields = {'name', 'address', 'bed_capacity', 'currently_free', 'hasTokenSystem', 'linkToTokenWebsite'}
+        fields = {'name', 'address', 'bed_capacity', 'currently_free', 'hasTokenSystem', 'linkToTokenWebsite', 'specialities'}
