@@ -109,6 +109,6 @@ class Hospital(models.Model):
 		return self.name
 
 class Token(models.Model):
-	user = 				models.OneToOneField(User, on_delete = models.CASCADE)
+	user = 				models.ForeignKey(User, on_delete = models.CASCADE)
 	department = 		models.CharField(max_length=3)
 	count = 			models.IntegerField(default=0)

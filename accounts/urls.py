@@ -10,4 +10,7 @@ urlpatterns = [
     path('signup/hospital/', views.signup_h, name='signup_h'),
     path('pat/dashboard/', views.patient_dashboard, name='patient_dashboard'),
     path('hos/dashboard/', views.hospital_dashboard, name='hospital_dashboard'),
+    path('hos/upd-tokens/', views.update_tokens, name='update_tokens'),
+    path('hos/upd-tokens/incr-tokens/<str:dept>/', views.increase_tokens, name='increase_tokens'),
+    path('hos/upd-tokens/decr-tokens/<str:dept>/', views.decrease_tokens, name='decrease_tokens'),
 ]

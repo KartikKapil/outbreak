@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 
-from .models import Patient, Hospital
+from .models import Patient, Hospital, Token
 from .forms import UserForm, PatientForm, HospitalForm
 
 def signup_p(request):
@@ -40,10 +41,14 @@ def signup_h(request):
             user.save()
             specialities=hospitalForm.cleaned_data.get('specialities')
 
-            # Save Patient
-            patient = hospitalForm.save(commit=False)
-            patient.user = user
-            patient.save()
+            # Save Hospital
+            hospital = hospitalForm.save(commit=False)
+            hospital.user = user
+            hospital.save()
+            if hospital.hasTokenSystem == False:
+                print(hospital.specialities) # A list
+                for spec in hospital.specialities:
+                    Token.objects.create(user = user,  department = spec, count = 0)
             redirect('home')
     else:
         userForm = UserForm()
@@ -60,3 +65,30 @@ def patient_dashboard(request):
 def hospital_dashboard(request):
     user_info = Hospital.objects.get(user = request.user)
     return render(request, 'accounts/hospital/dashboard.html', {'User': user_info})
+
+@login_required
+def update_tokens(request):
+    if request.user.user_type == 'H':
+        tokens = list(Token.objects.all().filter(user = request.user))
+        for t in tokens:
+            print(t.count)
+        return render(request, 'accounts/hospital/token-update.html', {'tokens': tokens})
+
+@login_required
+def decrease_tokens(request, dept):
+    if request.user.user_type == 'H':
+        token = Token.objects.get(user = request.user, department = dept)
+        if token.count > 0 :
+            token.count = token.count - 1
+            token.save()
+        return HttpResponse('')
+        # redirect('update_tokens')
+
+@login_required
+def increase_tokens(request, dept):
+    if request.user.user_type == 'H':
+        token = Token.objects.get(user = request.user, department = dept)
+        token.count = token.count + 1
+        token.save()
+        return HttpResponse('')
+        # redirect('update_tokens')
