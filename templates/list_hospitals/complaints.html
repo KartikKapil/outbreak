@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="post">{% csrf_token %}
+        <label for="ans">Enter your Complaint: </label>
+        <input type="text" name="ans">
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}

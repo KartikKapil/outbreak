@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h4>Do you have any more Complaints?</h4>
+    <a href="{% url 'complaints' %}">Yes</a>
+    &nbsp
+    <a href="{% url 'questionare' %}">No</a>
+{% endblock %}
