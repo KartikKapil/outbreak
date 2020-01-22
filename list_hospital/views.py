@@ -58,7 +58,7 @@ def interview(request):
             Will call the /parse endpoint and return mentions captured there."""
             global data
             
-            print(data)
+            # print(data)
             context = []  # a list of ids of present symptoms in the order of reporting
             for i in range(len(data)):
                 portion = call_parse(data[i], auth_string, case_id, context, language_model=language_model).get(
@@ -71,7 +71,7 @@ def interview(request):
                     context.extend([m['id'] for m in mentions if m['choice_id'] == 'present'])
 
                     # user said there's nothing more but we've already got at least one complaint
-            print(mentions)
+            # print(mentions)
             return mentions
         mentions = read_complaints(auth_string, case_id, language_model=None)
 
@@ -115,6 +115,7 @@ def interview(request):
         evidence.extend(new_evidence)
     # print(mentions)
     evidence = mentions_to_evidence(mentions)
+    # print(evidence)
     diagnosis, question_item = conduct_interview(evidence, age, sex, case_id, auth_string)
     return render(request, 'list_hospitals/interview.html', {'questions': question_item})
 

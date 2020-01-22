@@ -20,7 +20,7 @@ def _remote_headers(auth_string, case_id, language_model=None):
 def call_endpoint(endpoint, auth_string, request_spec, case_id, language_model=None):
     if auth_string and ':' in auth_string:
         url = infermedica_url.format(endpoint)
-        headers = _remote_headers(auth_string, str(case_id), language_model)
+        headers = _remote_headers(auth_string, language_model)
     else:
         raise IOError('need App-Id:App-Key auth string')
     if language_model:
@@ -34,12 +34,14 @@ def call_endpoint(endpoint, auth_string, request_spec, case_id, language_model=N
             lang_code = language_model
         headers['Language'] = lang_code
     if request_spec:
+        # print(request_spec)
         resp = requests.post(
             url,
             json=request_spec,
             headers=headers)
     else:
         resp = requests.get(url, headers=headers)
+    print(resp.json())
     resp.raise_for_status()
     return resp.json()
 
