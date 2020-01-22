@@ -23,8 +23,9 @@ def list_hospitals(request, data):
     return render(request, 'list_hospitals/index.html', {'hospitals': hospitals })
 ########################################################################################
 data = []
-auth_string = ""
+auth_string = "33e7b86d:1c80f2d4577c86270a5c69f560068804"
 new_evidence = []
+mentions = []
 answer_norm = {
     'yes': 'present',
     'y': 'present',
@@ -45,29 +46,34 @@ answer_norm = {
     'salta': 'unknown',
 }
 @login_required
-def question(request):
+def interview(request):
     user = Patient.objects.get(user=request.user)
-    case_id = user._id
+    case_id = user.id
     age = user.age
     sex = user.gender
+    global mentions
+    if not request.POST:
+        def read_complaints(auth_string, case_id, language_model=None):
+            """Keep reading complaint-describing messages from user until empty message read (or just read the story if given).
+            Will call the /parse endpoint and return mentions captured there."""
+            global data
+            
+            print(data)
+            context = []  # a list of ids of present symptoms in the order of reporting
+            for i in range(len(data)):
+                portion = call_parse(data[i], auth_string, case_id, context, language_model=language_model).get(
+                    'mentions', [])
+                if portion:
+                    # summarise_mentions(portion)
+                    mentions.extend(portion)
+                    # remember the mentions understood as context for next /parse calls
+                    #context.extend(context_from_mentions(portion))
+                    context.extend([m['id'] for m in mentions if m['choice_id'] == 'present'])
 
-    def read_complaints(auth_string, case_id, language_model=None):
-        """Keep reading complaint-describing messages from user until empty message read (or just read the story if given).
-        Will call the /parse endpoint and return mentions captured there."""
-        mentions = []
-        context = []  # a list of ids of present symptoms in the order of reporting
-        for i in range(len(data)):
-            portion = call_parse(data[i], auth_string, case_id, context, language_model=language_model).get(
-                'mentions', [])
-            if portion:
-                # summarise_mentions(portion)
-                mentions.extend(portion)
-                # remember the mentions understood as context for next /parse calls
-                #context.extend(context_from_mentions(portion))
-                context.extend([m['id'] for m in mentions if m['choice_id'] == 'present'])
-
-                # user said there's nothing more but we've already got at least one complaint
+                    # user said there's nothing more but we've already got at least one complaint
+            print(mentions)
             return mentions
+        mentions = read_complaints(auth_string, case_id, language_model=None)
 
     def conduct_interview(evidence, age, sex, case_id, auth, language_model=None):
         """Keep asking questions until API tells us to stop or the user gives an empty answer."""
@@ -107,23 +113,25 @@ def question(request):
         #     raise NotImplementedError('Group questions not handled in this example')
         # important: always update the evidence gathered so far with the new answers
         evidence.extend(new_evidence)
-
-    mentions = read_complaints(auth_string, case_id, language_model=None)
+    # print(mentions)
     evidence = mentions_to_evidence(mentions)
     diagnosis, question_item = conduct_interview(evidence, age, sex, case_id, auth_string)
-    return render(request, 'accounts/patient/questions.html', {'questions': question_item})
+    return render(request, 'list_hospitals/interview.html', {'questions': question_item})
 
 
 
 
-def start(request):
-    if request.post:
-        data.append(request.post.ans)  # redirect to question page
-        return redirect("kuch_bhi_dal_de")
+def take_symptoms(request):
+    if request.POST:
+        print(request.POST)
+        data.append(request.POST['ans'])  # redirect to question page
+        return redirect("confirmation")
+    return render(request,'list_hospitals/complaints.html')
 
 
-def kuch_bhi_dal_de(request):
-    return render(request, 'accounts/hospital/kuch_bhi_dal_de.html')
+def confirmation(request):
+
+    return render(request, 'list_hospitals/confirmation.html')
 
 
 
