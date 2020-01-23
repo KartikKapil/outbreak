@@ -23,7 +23,7 @@ def acute(lati,longi):
 
 def chronic(lati,longi):
 	# l=['pharmacy','primary+health+care+center','goverment+hospitals']
-	l=['goverment+hospitals']
+	l=['clinic']
 	result = []
 	for j in l:
 		url="https://maps.googleapis.com/maps/api/place/textsearch/json?query="+str(j)+"&key=AIzaSyCrK_sJw_cGjdUkX5mHNyz2fxb0UKjg1ts&location="
@@ -58,15 +58,13 @@ def chronic(lati,longi):
 				'address': data["results"][i]["formatted_address"],
 				'distance': res['matrix'][0][i]['response']['routeSummary']['lengthInMeters']/1000
 			})
-		print(result)
 		# time.sleep(3)
-		print("yeahhhhh")
 	return result
 
 
 def check(disease,lati,longi):
 	rows=[]
-	filename="all_disease.csv"
+	filename="diseases.csv"
 	with open(filename,'r') as csvfile:
 		csvreader=csv.reader(csvfile)
 		for row in csvreader:
@@ -78,7 +76,7 @@ def check(disease,lati,longi):
 	 		print(rows[i][1])
 	 		if((rows[i][1]=="acute") or (rows[i][1]=="acute/chronic") or (rows[i][1]=="chronic/acute")):
 	 			print("still correct")
-	 			chronic(lati,longi)
+	 			return chronic(lati,longi)
 	 		else:
 	 			print("chronic one ")
-	 			acute(lati,longi)
+	 			return acute(lati,longi)
