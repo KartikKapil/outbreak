@@ -89,8 +89,8 @@ def interview(request):
         if should_stop_now:
             # triage recommendation must be obtained from a separate endpoint, call it now
             # and return all the information together
-            triage_resp = call_triage(evidence, age, sex, case_id, auth, language_model=language_model)
-            return redirect("list_hospital/" + str(diagnoses) + '/' + str(triage_resp))
+            # triage_resp = call_triage(evidence, age, sex, case_id, auth, language_model=language_model)
+            return diagnoses, None
         if question_struct['type'] == 'single':
             # if you're calling /diagnosis in "disable_groups" mode, you'll only get "single" questions
             # these are simple questions that require a simple answer --
@@ -109,6 +109,8 @@ def interview(request):
     # print(evidence)
     if request.POST:
         diagnosis, question_item = conduct_interview(evidence, age, sex, case_id, auth_string)
+        if(question_item == None):
+            return redirect("list_hospital/" + str(diagnosis[0]['name']))
     return render(request, 'list_hospitals/interview.html', {'question': question_item})
 
 
