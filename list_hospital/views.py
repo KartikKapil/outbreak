@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .APIs import chronic
 from accounts.models import Patient
 from .apiaccess import *
+from .new_conversation import diagnose
 
 @login_required
 def search(request):
@@ -24,7 +25,7 @@ def list_hospitals(request, data):
 ########################################################################################
 data = []
 auth_string = "33e7b86d:1c80f2d4577c86270a5c69f560068804"
-new_evidence = []
+evidence = []
 mentions = []
 answer_norm = {
     'yes': 'present',
@@ -50,8 +51,10 @@ def interview(request):
     user = Patient.objects.get(user=request.user)
     case_id = user.id
     age = user.age
-    sex = user.gender
+    sex = "male"
+    question_item = "Do you wanna fuck?"
     global mentions
+    global evidence
     if not request.POST:
         def read_complaints(auth_string, case_id, language_model=None):
             """Keep reading complaint-describing messages from user until empty message read (or just read the story if given).
@@ -77,8 +80,9 @@ def interview(request):
 
     def conduct_interview(evidence, age, sex, case_id, auth, language_model=None):
         """Keep asking questions until API tells us to stop or the user gives an empty answer."""
-
-        resp = call_diagnosis(evidence, age, sex, case_id, auth, language_model=language_model)
+        print(evidence)
+        resp = diagnose(age, sex,evidence)
+        # print(resp)
         question_struct = resp['question']
         diagnoses = resp['conditions']
         should_stop_now = resp['should_stop']
@@ -94,37 +98,25 @@ def interview(request):
             question_items = question_struct['items']
             assert len(question_items) == 1  # this is a single question
             question_item = question_items[0]
-            observation_value = answer_norm[request.post.ans]
+            observation_value = answer_norm[request.POST['ans']]
             # render(request,'')
             if observation_value is not None:
-                new_evidence.extend(question_answer_to_evidence(question_item, observation_value))
-
-                return diagnosis, question_item
-        # else:
-        #     # You'd need a rich UI to handle group questions gracefully.
-        #     # There are two types of group questions: "group_single" (radio buttons)
-        #     # and "group_multiple" (a bunch of single questions gathered under one caption).
-        #     # Actually you can try asking sequentially for each question item from "group_multiple" question
-        #     # and then adding the evidence coming from all these answers.
-        #     # For "group_single" there should be only one present answer. It's recommended to include only this chosen
-        #     # answer as present symptom in the new evidence.
-        #     # For more details, please consult:
-        #     # https://developer.infermedica.com/docs/diagnosis#group_single
-        #     raise NotImplementedError('Group questions not handled in this example')
-        # important: always update the evidence gathered so far with the new answers
-        evidence.extend(new_evidence)
+                evidence.extend(question_answer_to_evidence(question_item, observation_value))
+        # evidence.extend(new_evidence)
+        return diagnoses, question_struct['text']
     # print(mentions)
-    evidence = mentions_to_evidence(mentions)
+    evidence.extend(mentions_to_evidence(mentions))
     # print(evidence)
-    diagnosis, question_item = conduct_interview(evidence, age, sex, case_id, auth_string)
-    return render(request, 'list_hospitals/interview.html', {'questions': question_item})
+    if request.POST:
+        diagnosis, question_item = conduct_interview(evidence, age, sex, case_id, auth_string)
+    return render(request, 'list_hospitals/interview.html', {'question': question_item})
 
 
 
 
 def take_symptoms(request):
     if request.POST:
-        print(request.POST)
+        #print(request.POST)
         data.append(request.POST['ans'])  # redirect to question page
         return redirect("confirmation")
     return render(request,'list_hospitals/complaints.html')

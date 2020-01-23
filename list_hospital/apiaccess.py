@@ -1,5 +1,5 @@
 import requests
-
+import json
 
 infermedica_url = 'https://api.infermedica.com/v2/{}'
 
@@ -37,7 +37,7 @@ def call_endpoint(endpoint, auth_string, request_spec, case_id, language_model=N
         # print(request_spec)
         resp = requests.post(
             url,
-            json=request_spec,
+            data=json.dumps(request_spec),
             headers=headers)
     else:
         resp = requests.get(url, headers=headers)
