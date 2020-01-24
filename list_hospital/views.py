@@ -20,7 +20,7 @@ def list_hospitals(request, disease):
         # Generate all nearby facilities'
         print(disease[10:-2])
         # print(request.GET)
-        hospitals = check(str(disease[10:-2]), 28.6358749, 77.3738937)
+        hospitals = check(str(disease[10:-2]), 28.630999, 77.372165)
     else:
         # Generate Customised facilities
         hospitals = find_place(28.6358749, 77.3738937, ['clinic'])

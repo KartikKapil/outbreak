@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 
+import requests
+
 from .models import Patient, Hospital, Token
 from .forms import UserForm, PatientForm, HospitalForm
 
@@ -34,19 +36,21 @@ def signup_h(request):
     if(request.POST):
         userForm = UserForm(request.POST)
         hospitalForm = HospitalForm(request.POST)
+
         if userForm.is_valid() and hospitalForm.is_valid():
             # Save User
             user = userForm.save(commit=False)
             user.user_type = 'H'
-            user.save()
             specialities=hospitalForm.cleaned_data.get('specialities')
+            user.save()
 
             # Save Hospital
             hospital = hospitalForm.save(commit=False)
             hospital.user = user
+            hospital.latitude = 28.6446
+            hospital.longitude = 77.3655
             hospital.save()
             if hospital.hasTokenSystem == False:
-                print(hospital.specialities) # A list
                 for spec in hospital.specialities:
                     Token.objects.create(user = user,  department = spec, count = 0)
             redirect('home')

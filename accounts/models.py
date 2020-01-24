@@ -83,6 +83,8 @@ class Hospital(models.Model):
 	user = 					models.OneToOneField(User, on_delete = models.CASCADE)
 	name = 					models.CharField(max_length=250)
 	address = 				models.CharField(max_length=250)
+	latitude = 				models.FloatField()
+	longitude = 			models.FloatField()
 	bed_capacity = 			models.CharField(max_length=250)
 	currently_free = 		models.CharField(max_length=250)
 	hasTokenSystem = 		models.BooleanField(default=False)
