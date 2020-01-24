@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .APIs import chronic, check
+from .APIs import find_place, check
 from accounts.models import Patient
 # from .apiaccess import *
 from .chatbot import *
+import json
 
 @login_required
 def search(request):
@@ -15,12 +16,14 @@ def search(request):
 
 @login_required
 def list_hospitals(request, disease):
-    if not disease:
-        # Generate all nearby facilities
-        hospitals = check(str(disease), 28.6358749, 77.3738937)
+    if disease:
+        # Generate all nearby facilities'
+        print(disease[10:-2])
+        # print(request.GET)
+        hospitals = check(str(disease[10:-2]), 28.6358749, 77.3738937)
     else:
         # Generate Customised facilities
-        hospitals = chronic(28.6358749, 77.3738937)
+        hospitals = find_place(28.6358749, 77.3738937, ['clinic'])
     return render(request, 'list_hospitals/index.html', {'hospitals': hospitals })
 
 complaints = []
