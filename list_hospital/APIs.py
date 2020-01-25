@@ -65,7 +65,7 @@ def check(disease,lati,longi):
 
 	# print(rows)
 	for i in range(0,len(rows),2):
-		
+		# print(str(disease))
 		if(str(rows[i][0])==str(disease)):
 	 		# print("correctly found")
 	 		# print(rows[i][1])
