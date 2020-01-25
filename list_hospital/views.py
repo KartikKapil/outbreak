@@ -48,24 +48,24 @@ def inialize_interview(request):
 
 def interview(request, age, sex):
     case_id=0
-    print(type(age),type(sex))
     
     question_item = "Init question?"
     global mentions
     global evidence
     global complaints
     if not request.POST:
+        print(complaints)
         time.sleep(0.01)
         mentions, evidence, question_item = read_complaints(complaints, evidence, age, sex, auth_string, case_id, language_model=None)
     if request.POST:
         time.sleep(0.01)
         diagnosis, question_item, evidence = conduct_interview(evidence, request.POST['ans'], age, sex, case_id, auth_string)
         if(question_item == None):
-            return redirect('list_hospitals', disease = diagnosis[0]['name']['data'])
+            return redirect('list_hospitals', disease = diagnosis[0]['name'])
     return render(request, 'list_hospitals/interview.html', {'question': question_item})
 
 def initalise_chatbot(request, complaint):
-    complaints.extend(complaint)
+    complaints.append(complaint)
     return redirect('confirmation')
 
 def take_symptoms(request):

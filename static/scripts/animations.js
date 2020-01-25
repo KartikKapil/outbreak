@@ -10,9 +10,8 @@ $(document).ready(function(){
         }, 500);
         
         $(this).find(".heading").stop().delay(150).animate({
-            top: "10%",
-            left: "20%",
-            transform: "translate(-50%, -50%)"
+            top: "20%",
+            left: "20%"
         }, 500);
         
         $(this).find(".docform").stop().delay(150).animate({

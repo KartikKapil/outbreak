@@ -8,7 +8,7 @@ class UserForm (UserCreationForm):
 
     class Meta:
         model = User
-        fields = {'user_id'}
+        fields = {'user_id', 'password1', 'password2'}
 
 
 class PatientForm (forms.ModelForm):

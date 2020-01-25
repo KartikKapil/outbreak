@@ -30,7 +30,7 @@ def signup_p(request):
     else:
         userForm = UserForm()
         patientForm = PatientForm()
-    return render(request, 'accounts/patient/signup.html', {'userForm': userForm, 'patientForm': patientForm})
+    return render(request, 'accounts/patient/signUp.html', {'userForm': userForm, 'patientForm': patientForm})
 
 def signup_h(request):
     if(request.POST):
